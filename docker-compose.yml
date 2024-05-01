@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  users-api:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/usr/src/app
+    command: flask run --host=0.0.0.0 --debug
+
+  mongo-db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/usr/src/data/db
+    
+volumes:
+  mongo-data:
