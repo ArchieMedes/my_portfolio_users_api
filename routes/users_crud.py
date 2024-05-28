@@ -6,6 +6,9 @@
 # Third party imports
 from flask import request, jsonify
 
+# Config imports
+from config.db import mongo_instance
+
 # Local imports
 from . import users_blueprint  # Importing the pre-setting to map the routes inside the module
 
@@ -15,10 +18,21 @@ from . import users_blueprint  # Importing the pre-setting to map the routes ins
 def sign_up():
     """
         This function is for registering any new user
-        at a time
+        at a time (CREATE)
     """
 
-    return "Creación de usuario"
+    user_data = request.json
+    if not user_data:  # To validate the existence of actual data in the request payload
+        return jsonify({'error': 'Missing payload data'}), 400
+
+    # Now we will try to store the new user in db
+    db_response = mongo_instance.db.users.insert_one(user_data)  # 'users' is a collection inside 'users_db'
+    print('db_response:', db_response)
+
+    return jsonify({
+        'result': 'success',
+        'document_id': str(db_response.inserted_id)
+    }), 201
 
 
 @users_blueprint.route('/user/log-in', methods=['PUT'])
