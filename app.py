@@ -27,5 +27,5 @@ app.register_blueprint(users_blueprint, url_prefix='/api')
 # HEALTH CHECK =======================================================================
 @app.route("/")
 def hello_world():
-    """ just a health check"""
+    """Just a health check"""
     return "<p>Service up and running!</p>"

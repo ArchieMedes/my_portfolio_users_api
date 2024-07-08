@@ -12,5 +12,5 @@ mongo_instance = PyMongo()
 
 # =================================================================
 def init_db(app):
-    """ initialize the database"""
+    """Initialize the database"""
     mongo_instance.init_app(app)
